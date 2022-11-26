@@ -1,5 +1,44 @@
+import Report from "../models/Report.js";
+import { StatusCodes } from "http-status-codes";
+import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+
 const createReport = async (req, res) => {
-  res.send("create report");
+  const {
+    programType,
+    programSubType,
+    programName,
+    eventName,
+    programStatus,
+    eventDate,
+    eventSite,
+    totalEventHours,
+    totalParticipantsServed,
+    totalYouthServed,
+    totalNewParticipants,
+    totalNewYouth,
+    totalTeachingArtists,
+    demographicBreakdown,
+    programSummary,
+    expectationEvalStaff,
+    successDescription,
+    challengeDescription,
+    qualitativeFeedback,
+    marketingLinks,
+    numLearnedSkills,
+    numProgramSatisfaction,
+    numBetterOff,
+  } = req.body;
+
+  if (!programType || !programName || !programSubType) {
+    throw new BadRequestError(
+      "Please select the program type and add the program name"
+    );
+  }
+
+  req.body.createdBy = req.user.userId;
+
+  const report = await Report.create(req.body);
+  res.status(StatusCodes.CREATED).json({ report });
 };
 
 const deleteReport = async (req, res) => {
