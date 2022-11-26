@@ -10,6 +10,9 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -152,11 +155,26 @@ const AppProvider = ({ children }) => {
   };
 
   const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+
     try {
       const { data } = await authFetch.patch("/auth/update", currentUser);
-      console.log(data);
+      const { user, programType, token } = data;
+
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, programType, token },
+      });
+
+      addUserToLocalStorage({ user, programType, token });
     } catch (error) {
       // console.log(error.response);
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+
+      clearAlert();
     }
   };
 
