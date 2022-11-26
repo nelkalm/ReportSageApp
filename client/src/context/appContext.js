@@ -64,8 +64,9 @@ const AppProvider = ({ children }) => {
     },
     (error) => {
       console.log(error.response);
+      // if bearer token is missing/expires (401) then log out user
       if (error.response.status === 401) {
-        console.log("AUTH ERROR");
+        logOutUser();
       }
       return Promise.reject(error);
     }
@@ -169,10 +170,12 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({ user, programType, token });
     } catch (error) {
       // console.log(error.response);
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
 
       clearAlert();
     }

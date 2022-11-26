@@ -15,11 +15,10 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // // remove while testing
-    // if (!firstName || !lastName || !email || !programType) {
-    //   displayAlert();
-    //   return;
-    // }
+    if (!firstName || !lastName || !email || !programType) {
+      displayAlert();
+      return;
+    }
 
     updateUser({ firstName, lastName, email, programType });
   };
