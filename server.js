@@ -18,6 +18,7 @@ import reportsRouter from "./routes/reportsRoutes.js";
 // middleware
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
+import authenticateUser from "./middleware/auth.js";
 
 if (process.env.NODE_EMV !== "production") {
   app.use(morgan("dev"));
@@ -34,7 +35,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/reports", reportsRouter);
+app.use("/api/v1/reports", authenticateUser, reportsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
