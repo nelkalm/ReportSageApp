@@ -50,6 +50,7 @@ const Profile = () => {
             value={email}
             handleChange={(e) => setEmail(e.target.value)}
           />
+
           <div className="form-row">
             <label className="form-label">Program Department</label>
             <select

@@ -36,6 +36,38 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Set up an axios instance to restrict sending bearer token
+  const authFetch = axios.create({
+    baseURL: "api/v1",
+  });
+
+  // AXIOS INTERCEPTORS - control error response, keep track error response
+  // and make decisions based on error response
+  // Add axios request interceptor - set up 1 logic for multiple error response
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Add axios response interceptor
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      console.log(error.response);
+      if (error.response.status === 401) {
+        console.log("AUTH ERROR");
+      }
+      return Promise.reject(error);
+    }
+  );
+
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
@@ -120,7 +152,12 @@ const AppProvider = ({ children }) => {
   };
 
   const updateUser = async (currentUser) => {
-    console.log(currentUser);
+    try {
+      const { data } = await authFetch.patch("/auth/update", currentUser);
+      console.log(data);
+    } catch (error) {
+      // console.log(error.response);
+    }
   };
 
   return (
