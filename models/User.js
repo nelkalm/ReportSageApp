@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema({
 // Set up presave hook, called before saving the document
 // Hash password before saving using bcryptjs
 UserSchema.pre("save", async function () {
+  // console.log(this.modifiedPaths());
+  // console.log(this.isModified("firstName"));
+
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
