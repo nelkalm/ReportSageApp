@@ -343,9 +343,17 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  useEffect(() => {
-    getReports();
-  }, []);
+  const setEditReport = (id) => {
+    console.log(`set edit report: ${id}`);
+  };
+
+  const deleteReport = (id) => {
+    console.log(`set delete report: ${id}`);
+  };
+
+  // useEffect(() => {
+  //   getReports();
+  // }, []);
 
   return (
     <AppContext.Provider
@@ -361,6 +369,8 @@ const AppProvider = ({ children }) => {
         clearValues,
         createReport,
         getReports,
+        setEditReport,
+        deleteReport,
       }}
     >
       {children}
