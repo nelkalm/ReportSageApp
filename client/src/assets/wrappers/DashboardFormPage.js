@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   border-radius: var(--borderRadius);
@@ -57,12 +57,12 @@ const Wrapper = styled.section`
   }
   @media (min-width: 1120px) {
     .form-center {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr;
     }
     .form-center button {
       margin-top: 0;
     }
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;
