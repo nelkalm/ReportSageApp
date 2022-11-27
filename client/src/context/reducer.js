@@ -20,6 +20,10 @@ import {
   GET_REPORTS_BEGIN,
   GET_REPORTS_SUCCESS,
   SET_EDIT_REPORT,
+  DELETE_REPORT_BEGIN,
+  EDIT_REPORT_BEGIN,
+  EDIT_REPORT_SUCCESS,
+  EDIT_REPORT_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -263,6 +267,33 @@ const reducer = (state, action) => {
       numLearnedSkills,
       numProgramSatisfaction,
       numBetterOff,
+    };
+  }
+  if (action.type === DELETE_REPORT_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === EDIT_REPORT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === EDIT_REPORT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Report successfully updated!",
+    };
+  }
+  if (action.type === EDIT_REPORT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action: ${action.type}`);

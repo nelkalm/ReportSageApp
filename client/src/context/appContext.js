@@ -21,6 +21,10 @@ import {
   GET_REPORTS_BEGIN,
   GET_REPORTS_SUCCESS,
   SET_EDIT_REPORT,
+  DELETE_REPORT_BEGIN,
+  EDIT_REPORT_BEGIN,
+  EDIT_REPORT_SUCCESS,
+  EDIT_REPORT_ERROR,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -351,12 +355,90 @@ const AppProvider = ({ children }) => {
     });
   };
 
-  const editReport = () => {
-    console.log("edit report");
+  const editReport = async () => {
+    dispatch({
+      type: EDIT_REPORT_BEGIN,
+    });
+
+    try {
+      const {
+        reportProgramType,
+        programSubType,
+        programName,
+        eventName,
+        programStatus,
+        eventDate,
+        eventSite,
+        totalEventHours,
+        totalParticipantsServed,
+        totalYouthServed,
+        totalNewParticipants,
+        totalNewYouth,
+        totalTeachingArtists,
+        demographicBreakdown,
+        programSummary,
+        expectationEvalStaff,
+        successDescription,
+        challengeDescription,
+        qualitativeFeedback,
+        marketingLinks,
+        numLearnedSkills,
+        numProgramSatisfaction,
+        numBetterOff,
+      } = state;
+
+      await authFetch.patch(`/reports/${state.editReportId}`, {
+        reportProgramType,
+        programSubType,
+        programName,
+        eventName,
+        programStatus,
+        eventDate,
+        eventSite,
+        totalEventHours,
+        totalParticipantsServed,
+        totalYouthServed,
+        totalNewParticipants,
+        totalNewYouth,
+        totalTeachingArtists,
+        demographicBreakdown,
+        programSummary,
+        expectationEvalStaff,
+        successDescription,
+        challengeDescription,
+        qualitativeFeedback,
+        marketingLinks,
+        numLearnedSkills,
+        numProgramSatisfaction,
+        numBetterOff,
+      });
+
+      dispatch({ type: EDIT_REPORT_SUCCESS });
+
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+
+      dispatch({
+        type: EDIT_REPORT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
-  const deleteReport = (id) => {
-    console.log(`set delete report: ${id}`);
+  const deleteReport = async (reportId) => {
+    dispatch({
+      type: DELETE_REPORT_BEGIN,
+    });
+
+    try {
+      await authFetch.delete(`/reports/${reportId}`);
+      getReports();
+    } catch (error) {
+      console.log(error.response);
+      logOutUser();
+    }
   };
 
   // useEffect(() => {
