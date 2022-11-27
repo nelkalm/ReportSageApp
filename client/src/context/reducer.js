@@ -19,6 +19,7 @@ import {
   CREATE_REPORT_ERROR,
   GET_REPORTS_BEGIN,
   GET_REPORTS_SUCCESS,
+  SET_EDIT_REPORT,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -200,6 +201,68 @@ const reducer = (state, action) => {
       reports: action.payload.reports,
       totalReports: action.payload.totalReports,
       numOfPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === SET_EDIT_REPORT) {
+    // Retrieve the report from the state if report matches report id
+    const report = state.reports.find(
+      (report) => report._id === action.payload.id
+    );
+
+    const {
+      _id,
+      reportProgramType,
+      programSubType,
+      programName,
+      eventName,
+      programStatus,
+      eventDate,
+      eventSite,
+      totalEventHours,
+      totalParticipantsServed,
+      totalYouthServed,
+      totalNewParticipants,
+      totalNewYouth,
+      totalTeachingArtists,
+      demographicBreakdown,
+      programSummary,
+      expectationEvalStaff,
+      successDescription,
+      challengeDescription,
+      qualitativeFeedback,
+      marketingLinks,
+      numLearnedSkills,
+      numProgramSatisfaction,
+      numBetterOff,
+    } = report;
+
+    return {
+      ...state,
+      isEditing: true,
+      editReportId: _id,
+      reportProgramType,
+      programSubType,
+      programName,
+      eventName,
+      programStatus,
+      eventDate,
+      eventSite,
+      totalEventHours,
+      totalParticipantsServed,
+      totalYouthServed,
+      totalNewParticipants,
+      totalNewYouth,
+      totalTeachingArtists,
+      demographicBreakdown,
+      programSummary,
+      expectationEvalStaff,
+      successDescription,
+      challengeDescription,
+      qualitativeFeedback,
+      marketingLinks,
+      numLearnedSkills,
+      numProgramSatisfaction,
+      numBetterOff,
     };
   }
   throw new Error(`no such action: ${action.type}`);

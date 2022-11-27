@@ -37,8 +37,14 @@ const Report = ({
       <div className="content">
         <div className="content-center">
           <ReportInfo icon={<FaCalendarAlt />} text={date} />
-          <ReportInfo icon={<FaChild />} text={totalParticipantsServed} />
-          <ReportInfo icon={<FaClock />} text={totalEventHours} />
+          <ReportInfo
+            icon={<FaChild />}
+            text={totalParticipantsServed.toLocaleString()}
+          />
+          <ReportInfo
+            icon={<FaClock />}
+            text={totalEventHours.toLocaleString()}
+          />
           <div className={`status ${programStatus}`}>{programStatus}</div>
         </div>
         <footer>

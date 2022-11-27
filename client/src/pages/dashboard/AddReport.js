@@ -7,6 +7,7 @@ const AddReport = () => {
   const {
     isLoading,
     isEditing,
+    editReport,
     showAlert,
     displayAlert,
     reportProgramType,
@@ -55,7 +56,7 @@ const AddReport = () => {
       return;
     }
     if (isEditing) {
-      // editJob here
+      editReport();
       return;
     }
     createReport();

@@ -20,6 +20,7 @@ import {
   CREATE_REPORT_ERROR,
   GET_REPORTS_BEGIN,
   GET_REPORTS_SUCCESS,
+  SET_EDIT_REPORT,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -344,7 +345,14 @@ const AppProvider = ({ children }) => {
   };
 
   const setEditReport = (id) => {
-    console.log(`set edit report: ${id}`);
+    dispatch({
+      type: SET_EDIT_REPORT,
+      payload: { id },
+    });
+  };
+
+  const editReport = () => {
+    console.log("edit report");
   };
 
   const deleteReport = (id) => {
@@ -371,6 +379,7 @@ const AppProvider = ({ children }) => {
         getReports,
         setEditReport,
         deleteReport,
+        editReport,
       }}
     >
       {children}
