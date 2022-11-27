@@ -49,7 +49,18 @@ const createReport = async (req, res) => {
 };
 
 const deleteReport = async (req, res) => {
-  res.send("delete report");
+  const { id: reportId } = req.params;
+  const report = await Report.findOne({ _id: reportId });
+
+  if (!report) {
+    throw new NotFoundError(`No report with id: ${reportId}`);
+  }
+
+  checkPermissions(req.user, report.createdBy);
+
+  await report.remove();
+
+  res.status(StatusCodes.OK).json({ msg: "Report successfully deleted." });
 };
 
 const getAllReports = async (req, res) => {
