@@ -238,6 +238,73 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
+  const createReport = async () => {
+    dispatch({ type: CREATE_REPORT_BEGIN });
+    try {
+      const {
+        reportProgramType,
+        programSubType,
+        programName,
+        eventName,
+        programStatus,
+        eventDate,
+        eventSite,
+        totalEventHours,
+        totalParticipantsServed,
+        totalYouthServed,
+        totalNewParticipants,
+        totalNewYouth,
+        totalTeachingArtists,
+        demographicBreakdown,
+        programSummary,
+        expectationEvalStaff,
+        successDescription,
+        challengeDescription,
+        qualitativeFeedback,
+        marketingLinks,
+        numLearnedSkills,
+        numProgramSatisfaction,
+        numBetterOff,
+      } = state;
+
+      await authFetch.post("/reports", {
+        reportProgramType,
+        programSubType,
+        programName,
+        eventName,
+        programStatus,
+        eventDate,
+        eventSite,
+        totalEventHours,
+        totalParticipantsServed,
+        totalYouthServed,
+        totalNewParticipants,
+        totalNewYouth,
+        totalTeachingArtists,
+        demographicBreakdown,
+        programSummary,
+        expectationEvalStaff,
+        successDescription,
+        challengeDescription,
+        qualitativeFeedback,
+        marketingLinks,
+        numLearnedSkills,
+        numProgramSatisfaction,
+        numBetterOff,
+      });
+
+      dispatch({ type: CREATE_REPORT_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status == 401) return;
+      dispatch({
+        type: CREATE_REPORT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -250,6 +317,7 @@ const AppProvider = ({ children }) => {
         updateUser,
         handleChange,
         clearValues,
+        createReport,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 
 const createReport = async (req, res) => {
   const {
-    programType,
+    reportProgramType,
     programSubType,
     programName,
     eventName,
@@ -29,7 +29,9 @@ const createReport = async (req, res) => {
     numBetterOff,
   } = req.body;
 
-  if (!programType || !programName || !programSubType) {
+  console.log(req.body);
+
+  if (!reportProgramType || !programName || !programSubType) {
     throw new BadRequestError(
       "Please select the program type and add the program name"
     );

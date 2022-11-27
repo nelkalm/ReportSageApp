@@ -7,7 +7,7 @@ const ReportSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    programType: {
+    reportProgramType: {
       type: String,
       required: [true, "Please select a program type"],
       enum: ["Art", "Nature", "Neighborhood", "Admin"],
@@ -38,7 +38,7 @@ const ReportSchema = mongoose.Schema(
     programStatus: {
       type: String,
       required: true,
-      enum: ["new", "ongoing", "completed"],
+      enum: ["New", "Ongoing", "Completed"],
     },
     eventDate: {
       type: String,

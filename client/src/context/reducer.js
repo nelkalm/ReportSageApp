@@ -162,10 +162,30 @@ const reducer = (state, action) => {
       numProgramSatisfaction: 0,
       numBetterOff: 0,
     };
-
     return {
       ...state,
       ...initialState,
+    };
+  }
+  if (action.type === CREATE_REPORT_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === CREATE_REPORT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "New report created successfully.",
+    };
+  }
+  if (action.type === CREATE_REPORT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action: ${action.type}`);

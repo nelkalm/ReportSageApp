@@ -5,6 +5,7 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 
 const AddReport = () => {
   const {
+    isLoading,
     isEditing,
     showAlert,
     displayAlert,
@@ -37,6 +38,7 @@ const AddReport = () => {
     numBetterOff,
     handleChange,
     clearValues,
+    createReport,
   } = useAppContext();
 
   const handleReportInput = (e) => {
@@ -52,7 +54,11 @@ const AddReport = () => {
       displayAlert();
       return;
     }
-    console.log("create report");
+    if (isEditing) {
+      // editJob here
+      return;
+    }
+    createReport();
   };
 
   return (
@@ -257,9 +263,10 @@ const AddReport = () => {
           />
           <div className="btn-container">
             <button
-              className="btn btn-block"
+              className="btn btn-block submit-btn"
               type="submit"
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               Submit
             </button>
