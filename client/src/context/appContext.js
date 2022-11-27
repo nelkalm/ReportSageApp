@@ -13,6 +13,11 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_REPORT_BEGIN,
+  CREATE_REPORT_SUCCESS,
+  CREATE_REPORT_ERROR,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -68,7 +73,7 @@ const initialState = {
     "4",
     "5 (Exceeded expectations)",
   ],
-  expectationEvalStaff: 1,
+  expectationEvalStaff: "1 (Not at all - improvements needed)",
   successDescription: "",
   challengeDescription: "",
   qualitativeFeedback: "",
@@ -225,6 +230,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -235,6 +248,8 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logOutUser,
         updateUser,
+        handleChange,
+        clearValues,
       }}
     >
       {children}

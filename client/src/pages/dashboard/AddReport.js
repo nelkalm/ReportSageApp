@@ -35,12 +35,14 @@ const AddReport = () => {
     numLearnedSkills,
     numProgramSatisfaction,
     numBetterOff,
+    handleChange,
+    clearValues,
   } = useAppContext();
 
   const handleReportInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(`${name}: ${value}`);
+    handleChange({ name, value });
   };
 
   const handleSubmit = (e) => {
@@ -260,6 +262,15 @@ const AddReport = () => {
               onClick={handleSubmit}
             >
               Submit
+            </button>
+            <button
+              className="btn btn-block clear-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                clearValues();
+              }}
+            >
+              Clear
             </button>
           </div>
         </div>
