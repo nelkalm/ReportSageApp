@@ -25,6 +25,8 @@ import {
   EDIT_REPORT_BEGIN,
   EDIT_REPORT_SUCCESS,
   EDIT_REPORT_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -100,6 +102,10 @@ const initialState = {
   totalReports: 0,
   numOfPages: 1,
   page: 1,
+
+  // Stats related states
+  stats: {},
+  monthlyParticipantsServed: [],
 };
 
 const AppContext = React.createContext();
@@ -441,6 +447,25 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+
+    try {
+      const { data } = await authFetch("/reports/stats");
+
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultProgramStats,
+          monthlyParticipantsServed: data.monthlyParticipantsServed,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      // logOutUser()
+    }
+  };
+
   // useEffect(() => {
   //   getReports();
   // }, []);
@@ -462,6 +487,7 @@ const AppProvider = ({ children }) => {
         setEditReport,
         deleteReport,
         editReport,
+        showStats,
       }}
     >
       {children}

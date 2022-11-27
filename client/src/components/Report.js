@@ -56,7 +56,7 @@ const Report = ({
                 setEditReport(_id);
               }}
             >
-              Edit
+              View/Edit
             </Link>
             <button
               type="button"

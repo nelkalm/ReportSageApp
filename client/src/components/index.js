@@ -10,6 +10,9 @@ import FormRowSelect from "./FormRowSelect";
 import FormTextArea from "./FormTextArea";
 import SearchContainer from "./SearchContainer";
 import ReportsContainer from "./ReportsContainer";
+import StatsContainer from "./StatsContainer";
+import ChartsContainer from "./ChartsContainer";
+import Loading from "./Loading";
 
 export {
   Logo,
@@ -22,4 +25,7 @@ export {
   FormTextArea,
   SearchContainer,
   ReportsContainer,
+  StatsContainer,
+  ChartsContainer,
+  Loading,
 };

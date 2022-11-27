@@ -6,6 +6,7 @@ import {
   NotFoundError,
 } from "../errors/index.js";
 import checkPermissions from "../utils/checkPermissions.js";
+import mongoose from "mongoose";
 
 const createReport = async (req, res) => {
   const {
@@ -130,7 +131,34 @@ const updateReport = async (req, res) => {
 };
 
 const showStats = async (req, res) => {
-  res.send("show stats");
+  let stats = await Report.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      // total participants served by subprogram
+      $group: {
+        _id: "$reportProgramType",
+        count: { $sum: "$totalParticipantsServed" },
+      },
+    },
+  ]);
+
+  stats = stats.reduce((accumulator, currentItem) => {
+    const { _id: programType, count } = currentItem;
+    accumulator[programType] = count;
+    return accumulator;
+  }, {});
+
+  const defaultProgramStats = {
+    art: stats.Art || 0,
+    nature: stats.Nature || 0,
+    neighborhood: stats.Neighborhood || 0,
+  };
+
+  let monthlyParticipantsServed = [];
+
+  res
+    .status(StatusCodes.OK)
+    .json({ defaultProgramStats, monthlyParticipantsServed });
 };
 
 export { createReport, deleteReport, getAllReports, updateReport, showStats };
