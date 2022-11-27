@@ -1,11 +1,11 @@
 import React from "react";
 
 const FormTextArea = ({
-  labelText,
   name,
+  value,
+  labelText,
   rows,
   placeholder,
-  value,
   handleChange,
 }) => {
   return (
@@ -15,11 +15,11 @@ const FormTextArea = ({
       </label>
       <textarea
         name={name}
+        value={value}
         id={name}
         className="form-textarea"
         rows={rows}
         placeholder={placeholder}
-        defaultValue={value}
         onChange={handleChange}
       />
     </div>

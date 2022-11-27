@@ -171,8 +171,8 @@ const AddReport = () => {
           />
           {/* Demographic Breakdown */}
           <FormTextArea
-            name={demographicBreakdown}
-            id={demographicBreakdown}
+            name="demographicBreakdown"
+            id="demographicBreakdown"
             labelText="Enter Demographic Breakdown"
             placeholder="If you have data on demographic breakdown, please enter them here. Demographic data includes race, age, gender, etc."
             value={demographicBreakdown}
@@ -180,8 +180,8 @@ const AddReport = () => {
           />
           {/* Program Summary */}
           <FormTextArea
-            name={programSummary}
-            id={programSummary}
+            name="programSummary"
+            id="programSummary"
             labelText="Enter Program Summary"
             placeholder="Please describe the program activities. Also, please describe program outcomes that was used to measure the last 3 fields."
             value={programSummary}
@@ -197,7 +197,7 @@ const AddReport = () => {
           />
           {/* Program/Event successes */}
           <FormTextArea
-            name={successDescription}
+            name="successDescription"
             id={successDescription}
             labelText="Program/event successes"
             placeholder="List 1-3 things that were successful with the program. Bullet points or short sentences are okay."
@@ -206,8 +206,8 @@ const AddReport = () => {
           />
           {/* Program/Event challenges */}
           <FormTextArea
-            name={challengeDescription}
-            id={challengeDescription}
+            name="challengeDescription"
+            id="challengeDescription"
             labelText="Program/event challenges"
             placeholder="List 1-3 things that were challenging with the program. Bullet points or short sentences are okay."
             value={challengeDescription}
@@ -215,8 +215,8 @@ const AddReport = () => {
           />
           {/* Program/Event qualitative feedback */}
           <FormTextArea
-            name={qualitativeFeedback}
-            id={qualitativeFeedback}
+            name="qualitativeFeedback"
+            id="qualitativeFeedback"
             labelText="Program/event qualitative feedback"
             placeholder="Describe any memorable parts of the program. (Stories from the program are helpful for grant reports. Was there a participant who had a memorable experience? Were connections made during the program?...etc.)  "
             value={qualitativeFeedback}
@@ -224,8 +224,8 @@ const AddReport = () => {
           />
           {/* Program/Event marketing links */}
           <FormTextArea
-            name={marketingLinks}
-            id={marketingLinks}
+            name="marketingLinks"
+            id="marketingLinks"
             labelText="Marketing/media"
             placeholder="Please provide link(s) to Program/Event pictures, videos, and/or marketing material (fliers/social media graphics). "
             value={marketingLinks}
