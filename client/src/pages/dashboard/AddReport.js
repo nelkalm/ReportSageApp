@@ -269,7 +269,7 @@ const AddReport = () => {
               onClick={handleSubmit}
               disabled={isLoading}
             >
-              Submit
+              {isEditing ? "Save" : "Submit"}
             </button>
             <button
               className="btn btn-block clear-btn"
