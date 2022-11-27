@@ -48,7 +48,10 @@ const deleteReport = async (req, res) => {
 };
 
 const getAllReports = async (req, res) => {
-  res.send("get all reports");
+  const reports = await Report.find({ createdBy: req.user.userId });
+  res
+    .status(StatusCodes.OK)
+    .json({ reports, totalReports: reports.length, numPages: 1 });
 };
 
 const updateReport = async (req, res) => {
