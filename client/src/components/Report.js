@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { FaInfoCircle, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { FaClock, FaChild, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/Report";
@@ -15,6 +15,7 @@ const Report = ({
   programSubType,
   programStatus,
   totalParticipantsServed,
+  totalEventHours,
 }) => {
   const { setEditReport, deleteReport } = useAppContext();
 
@@ -34,7 +35,12 @@ const Report = ({
         </div>
       </header>
       <div className="content">
-        {/* content center later */}
+        <div className="content-center">
+          <ReportInfo icon={<FaCalendarAlt />} text={date} />
+          <ReportInfo icon={<FaChild />} text={totalParticipantsServed} />
+          <ReportInfo icon={<FaClock />} text={totalEventHours} />
+          <div className={`status ${programStatus}`}>{programStatus}</div>
+        </div>
         <footer>
           <div className="actions">
             <Link
