@@ -172,6 +172,7 @@ const showStats = async (req, res) => {
     { $limit: 12 },
   ]);
 
+  // Convert database object to MMM Y format
   monthlyParticipantsServed = monthlyParticipantsServed
     .map((item) => {
       const {
