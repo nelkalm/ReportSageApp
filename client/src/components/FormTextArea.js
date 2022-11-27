@@ -19,9 +19,9 @@ const FormTextArea = ({
         className="form-textarea"
         rows={rows}
         placeholder={placeholder}
-        value={value}
+        defaultValue={value}
         onChange={handleChange}
-      ></textarea>
+      />
     </div>
   );
 };
