@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useEffect } from "react";
 import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
@@ -18,6 +18,8 @@ import {
   CREATE_REPORT_BEGIN,
   CREATE_REPORT_SUCCESS,
   CREATE_REPORT_ERROR,
+  GET_REPORTS_BEGIN,
+  GET_REPORTS_SUCCESS,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -32,14 +34,20 @@ const initialState = {
   showAlert: false,
   alertText: "",
   alertType: "",
+
+  // User related states
   user: user ? JSON.parse(user) : null,
   token: token,
   userProgramType: userProgramType || "",
+
+  // Report edit related states
   reportProgramType: userProgramType || "",
   programTypeOptions: ["Art", "Nature", "Neighborhood", "Admin"],
   showSidebar: false,
   isEditing: false,
   editReportId: "",
+
+  // Report creation related states
   programSubTypeOptions: [
     "EcoArts",
     "Summer Youth Program",
@@ -81,10 +89,21 @@ const initialState = {
   numLearnedSkills: 0,
   numProgramSatisfaction: 0,
   numBetterOff: 0,
+
+  // Reports related states
+  reports: [],
+  totalReports: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 const AppContext = React.createContext();
 
+/**
+ * A context provider function for page components to access
+ * @param {any} {children}
+ * @returns {any}
+ */
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -305,6 +324,29 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getReports = async () => {
+    let url = `/reports`;
+
+    dispatch({ type: GET_REPORTS_BEGIN });
+
+    try {
+      const { data } = await authFetch(url);
+      const { reports, totalReports, numOfPages } = data;
+      dispatch({
+        type: GET_REPORTS_SUCCESS,
+        payload: { reports, totalReports, numOfPages },
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+
+    clearAlert();
+  };
+
+  useEffect(() => {
+    getReports();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -318,6 +360,7 @@ const AppProvider = ({ children }) => {
         handleChange,
         clearValues,
         createReport,
+        getReports,
       }}
     >
       {children}

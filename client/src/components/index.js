@@ -8,6 +8,8 @@ import BigSidebar from "./BigSidebar";
 import SmallSidebar from "./SmallSidebar";
 import FormRowSelect from "./FormRowSelect";
 import FormTextArea from "./FormTextArea";
+import SearchContainer from "./SearchContainer";
+import ReportsContainer from "./ReportsContainer";
 
 export {
   Logo,
@@ -18,4 +20,6 @@ export {
   SmallSidebar,
   FormRowSelect,
   FormTextArea,
+  SearchContainer,
+  ReportsContainer,
 };

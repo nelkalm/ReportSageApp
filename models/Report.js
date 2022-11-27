@@ -81,9 +81,15 @@ const ReportSchema = mongoose.Schema(
       required: [true, "Please describe the program activities"],
     },
     expectationEvalStaff: {
-      type: Number,
+      type: String,
       required: [true, "Did this program/event meet your expectations?"],
-      enum: [1, 2, 3, 4, 5],
+      enum: [
+        "1 (Not at all - improvements needed)",
+        "2",
+        "3",
+        "4",
+        "5 (Exceeded expectations)",
+      ],
     },
     successDescription: {
       type: String,

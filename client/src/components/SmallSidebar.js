@@ -16,11 +16,7 @@ const SmallSidebar = () => {
         }
       >
         <div className="content">
-          <button
-            type="button"
-            className="close-btn"
-            onClick={() => console.log("toggle sidebar")}
-          >
+          <button type="button" className="close-btn" onClick={toggleSidebar}>
             <FaTimes />
           </button>
           <header>

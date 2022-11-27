@@ -1,7 +1,13 @@
 import React from "react";
+import { ReportsContainer, SearchContainer } from "../../components";
 
 const AllReports = () => {
-  return <div>AllReports</div>;
+  return (
+    <>
+      <SearchContainer />
+      <ReportsContainer />
+    </>
+  );
 };
 
 export default AllReports;

@@ -64,7 +64,7 @@ const AddReport = () => {
   return (
     <Wrapper>
       <form action="" className="form">
-        <h3>{isEditing ? "edit report" : "create report"}</h3>
+        <h3>{isEditing ? "Edit Report" : "Create Report"}</h3>
         {showAlert && <Alert />}
         <div className="form-center">
           {/* Program Name */}
