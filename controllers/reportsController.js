@@ -7,6 +7,7 @@ import {
 } from "../errors/index.js";
 import checkPermissions from "../utils/checkPermissions.js";
 import mongoose from "mongoose";
+import moment from "moment";
 
 const createReport = async (req, res) => {
   const {
@@ -154,7 +155,39 @@ const showStats = async (req, res) => {
     neighborhood: stats.Neighborhood || 0,
   };
 
-  let monthlyParticipantsServed = [];
+  let monthlyParticipantsServed = await Report.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      // total participants served by month
+      // must convert date from string using $toDate operator
+      $group: {
+        _id: {
+          year: { $year: { $toDate: "$eventDate" } },
+          month: { $month: { $toDate: "$eventDate" } },
+        },
+        count: { $sum: "$totalParticipantsServed" },
+      },
+    },
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 12 },
+  ]);
+
+  monthlyParticipantsServed = monthlyParticipantsServed
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+
+      // subtract 1 because in moment, months count from 0 to 11
+      const date = moment()
+        .month(month - 1)
+        .year(year)
+        .format("MMM Y");
+
+      return { date, count };
+    })
+    .reverse();
 
   res
     .status(StatusCodes.OK)
