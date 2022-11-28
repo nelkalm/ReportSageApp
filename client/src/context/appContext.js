@@ -28,6 +28,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -98,7 +99,7 @@ const initialState = {
   numProgramSatisfaction: 0,
   numBetterOff: 0,
 
-  // Reports related states
+  // Pagination related states
   reports: [],
   totalReports: 0,
   numOfPages: 1,
@@ -352,9 +353,9 @@ const AppProvider = ({ children }) => {
 
   const getReports = async () => {
     // Fetch reports with search and sort criteria
-    const { search, searchProgramSubType, sort } = state;
+    const { search, searchProgramSubType, sort, page } = state;
 
-    let url = `/reports?programSubType=${searchProgramSubType}&sort=${sort}`;
+    let url = `/reports?page=${page}&programSubType=${searchProgramSubType}&sort=${sort}`;
 
     if (search) {
       url = url + `&search=${search}`;
@@ -493,6 +494,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTERS });
   };
 
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
+
   // useEffect(() => {
   //   getReports();
   // }, []);
@@ -516,6 +521,7 @@ const AppProvider = ({ children }) => {
         editReport,
         showStats,
         clearFilters,
+        changePage,
       }}
     >
       {children}

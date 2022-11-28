@@ -3,6 +3,7 @@ import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
 import Report from "./Report";
 import Wrapper from "../assets/wrappers/ReportsContainer";
+import PageNumberButtonContainer from "./PageNumberButtonContainer";
 
 const ReportsContainer = () => {
   const {
@@ -14,11 +15,12 @@ const ReportsContainer = () => {
     search,
     searchProgramSubType,
     sort,
+    numOfPages,
   } = useAppContext();
 
   useEffect(() => {
     getReports();
-  }, [search, searchProgramSubType, sort]);
+  }, [search, searchProgramSubType, sort, page]);
 
   if (isLoading) {
     return <Loading center />;
@@ -43,7 +45,8 @@ const ReportsContainer = () => {
         })}
       </div>
 
-      {/* pagination goes here */}
+      {/* pagination */}
+      {numOfPages > 1 && <PageNumberButtonContainer />}
     </Wrapper>
   );
 };

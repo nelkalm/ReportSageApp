@@ -39,11 +39,11 @@ const Report = ({
           <ReportInfo icon={<FaCalendarAlt />} text={date} />
           <ReportInfo
             icon={<FaChild />}
-            text={totalParticipantsServed.toLocaleString()}
+            text={totalParticipantsServed.toLocaleString() + " served"}
           />
           <ReportInfo
             icon={<FaClock />}
-            text={totalEventHours.toLocaleString()}
+            text={totalEventHours.toLocaleString() + " hours"}
           />
           <div className={`status ${programStatus}`}>{programStatus}</div>
         </div>
