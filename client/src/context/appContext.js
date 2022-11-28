@@ -458,6 +458,7 @@ const AppProvider = ({ children }) => {
         payload: {
           stats: data.defaultProgramStats,
           monthlyParticipantsServed: data.monthlyParticipantsServed,
+          monthlyYouthServed: data.monthlyYouthServed,
         },
       });
     } catch (error) {

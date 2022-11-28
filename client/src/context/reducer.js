@@ -311,6 +311,7 @@ const reducer = (state, action) => {
       isLoading: false,
       stats: action.payload.stats,
       monthlyParticipantsServed: action.payload.monthlyParticipantsServed,
+      monthlyYouthServed: action.payload.monthlyYouthServed,
     };
   }
   throw new Error(`no such action: ${action.type}`);
