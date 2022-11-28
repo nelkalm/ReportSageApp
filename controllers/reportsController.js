@@ -73,7 +73,7 @@ const getAllReports = async (req, res) => {
   };
 
   // add query conditional logic
-  if (programSubType !== "All") {
+  if (programSubType && programSubType !== "All") {
     queryObject.programSubType = programSubType;
   }
 

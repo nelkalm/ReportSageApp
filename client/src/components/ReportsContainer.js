@@ -5,12 +5,20 @@ import Report from "./Report";
 import Wrapper from "../assets/wrappers/ReportsContainer";
 
 const ReportsContainer = () => {
-  const { getReports, reports, isLoading, page, totalReports } =
-    useAppContext();
+  const {
+    getReports,
+    reports,
+    isLoading,
+    page,
+    totalReports,
+    search,
+    searchProgramSubType,
+    sort,
+  } = useAppContext();
 
   useEffect(() => {
     getReports();
-  }, []);
+  }, [search, searchProgramSubType, sort]);
 
   if (isLoading) {
     return <Loading center />;

@@ -27,6 +27,7 @@ import {
   EDIT_REPORT_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 
 import reducer from "./reducer";
@@ -106,6 +107,20 @@ const initialState = {
   // Stats related states
   stats: {},
   monthlyParticipantsServed: [],
+
+  // Searching and sorting related states
+  search: "",
+  searchProgramSubType: "All",
+  sort: "Last submission",
+  sortOptions: [
+    "Last submission",
+    "Last program date",
+    "Earliest submission",
+    "Earliest program date",
+    "Highest total participants served",
+    "Highest total youth served",
+    "A-Z",
+  ],
 };
 
 const AppContext = React.createContext();
@@ -336,7 +351,14 @@ const AppProvider = ({ children }) => {
   };
 
   const getReports = async () => {
-    let url = `/reports`;
+    // Fetch reports with search and sort criteria
+    const { search, searchProgramSubType, sort } = state;
+
+    let url = `/reports?programSubType=${searchProgramSubType}&sort=${sort}`;
+
+    if (search) {
+      url = url + `&search=${search}`;
+    }
 
     dispatch({ type: GET_REPORTS_BEGIN });
 
@@ -467,6 +489,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   // useEffect(() => {
   //   getReports();
   // }, []);
@@ -489,6 +515,7 @@ const AppProvider = ({ children }) => {
         deleteReport,
         editReport,
         showStats,
+        clearFilters,
       }}
     >
       {children}

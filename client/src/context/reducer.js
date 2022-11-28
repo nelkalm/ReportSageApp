@@ -26,6 +26,7 @@ import {
   EDIT_REPORT_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -312,6 +313,14 @@ const reducer = (state, action) => {
       stats: action.payload.stats,
       monthlyParticipantsServed: action.payload.monthlyParticipantsServed,
       monthlyYouthServed: action.payload.monthlyYouthServed,
+    };
+  }
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      search: "",
+      searchProgramSubType: "All",
+      sort: "Last submission",
     };
   }
   throw new Error(`no such action: ${action.type}`);
