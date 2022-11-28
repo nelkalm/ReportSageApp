@@ -107,15 +107,23 @@ const getAllReports = async (req, res) => {
     result = result.sort("programName");
   }
 
+  // Set up pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 8;
+  const skip = (page - 1) * limit;
+
+  // skipping job in the response
+  result = result.skip(skip).limit(limit);
+
   const reports = await result;
+  const totalReports = await Report.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalReports / limit);
 
   // const reports = await Report.find({
   //   createdBy: req.user.userId,
   // });
 
-  res
-    .status(StatusCodes.OK)
-    .json({ reports, totalReports: reports.length, numPages: 1 });
+  res.status(StatusCodes.OK).json({ reports, totalReports, numOfPages });
 };
 
 const updateReport = async (req, res) => {
