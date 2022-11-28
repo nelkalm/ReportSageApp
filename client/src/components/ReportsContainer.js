@@ -20,6 +20,7 @@ const ReportsContainer = () => {
 
   useEffect(() => {
     getReports();
+    // eslint-disable-next-line
   }, [search, searchProgramSubType, sort, page]);
 
   if (isLoading) {

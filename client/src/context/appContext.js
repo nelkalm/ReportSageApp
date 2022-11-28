@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useEffect } from "react";
+import React, { useReducer, useContext } from "react";
 import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
@@ -342,7 +342,7 @@ const AppProvider = ({ children }) => {
       dispatch({ type: CREATE_REPORT_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
-      if (error.response.status == 401) return;
+      if (error.response.status === 401) return;
       dispatch({
         type: CREATE_REPORT_ERROR,
         payload: { msg: error.response.data.msg },
@@ -371,7 +371,7 @@ const AppProvider = ({ children }) => {
         payload: { reports, totalReports, numOfPages },
       });
     } catch (error) {
-      console.log(error.response);
+      logOutUser();
     }
 
     clearAlert();
@@ -465,7 +465,6 @@ const AppProvider = ({ children }) => {
       await authFetch.delete(`/reports/${reportId}`);
       getReports();
     } catch (error) {
-      console.log(error.response);
       logOutUser();
     }
   };
@@ -485,8 +484,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.response);
-      // logOutUser()
+      logOutUser();
     }
   };
 

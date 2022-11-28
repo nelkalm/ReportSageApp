@@ -147,7 +147,7 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === CLEAR_VALUES) {
-    const initialStates = {
+    const initialState = {
       isEditing: false,
       editReportId: "",
       reportProgramType: state.userProgramType,
