@@ -5,6 +5,7 @@ import Wrapper from "../assets/wrappers/LandingPage";
 import { Logo } from "../components/index";
 
 const Landing = () => {
+  const footerYear = new Date().getFullYear();
   return (
     <Wrapper>
       <nav>
@@ -27,6 +28,12 @@ const Landing = () => {
         </div>
         <img src={main} alt="report" className="img main-img" />
       </div>
+      <footer className="footer">
+        <p>
+          Copyright &copy; {footerYear}. Created by Nelson Lu. All Rights
+          Reserved.
+        </p>
+      </footer>
     </Wrapper>
   );
 };
