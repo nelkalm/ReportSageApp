@@ -9,8 +9,13 @@ import {
   showStats,
 } from "../controllers/reportsController.js";
 
-router.route("/").post(createReport).get(getAllReports);
+import testUser from "../middleware/testUser.js";
+
+router.route("/").post(testUser, createReport).get(getAllReports);
 router.route("/stats").get(showStats);
-router.route("/:id").delete(deleteReport).patch(updateReport);
+router
+  .route("/:id")
+  .delete(testUser, deleteReport)
+  .patch(testUser, updateReport);
 
 export default router;

@@ -22,6 +22,7 @@ import {
   GET_REPORTS_SUCCESS,
   SET_EDIT_REPORT,
   DELETE_REPORT_BEGIN,
+  DELETE_REPORT_ERROR,
   EDIT_REPORT_BEGIN,
   EDIT_REPORT_SUCCESS,
   EDIT_REPORT_ERROR,
@@ -465,8 +466,14 @@ const AppProvider = ({ children }) => {
       await authFetch.delete(`/reports/${reportId}`);
       getReports();
     } catch (error) {
-      logOutUser();
+      if (error.response.status === 401) return;
+
+      dispatch({
+        type: DELETE_REPORT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
+    clearAlert();
   };
 
   const showStats = async () => {

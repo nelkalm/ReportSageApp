@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
 import Report from "./Report";
+import Alert from "./Alert";
 import Wrapper from "../assets/wrappers/ReportsContainer";
 import PageNumberButtonContainer from "./PageNumberButtonContainer";
 
@@ -16,6 +17,7 @@ const ReportsContainer = () => {
     searchProgramSubType,
     sort,
     numOfPages,
+    showAlert,
   } = useAppContext();
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const ReportsContainer = () => {
 
   return (
     <Wrapper>
+      {showAlert && <Alert />}
       <h5>
         {totalReports} report{reports.length > 1 && "s"} found
       </h5>

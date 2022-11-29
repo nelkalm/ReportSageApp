@@ -21,6 +21,7 @@ import {
   GET_REPORTS_SUCCESS,
   SET_EDIT_REPORT,
   DELETE_REPORT_BEGIN,
+  DELETE_REPORT_ERROR,
   EDIT_REPORT_BEGIN,
   EDIT_REPORT_SUCCESS,
   EDIT_REPORT_ERROR,
@@ -276,6 +277,15 @@ const reducer = (state, action) => {
   }
   if (action.type === DELETE_REPORT_BEGIN) {
     return { ...state, isLoading: true };
+  }
+  if (action.type === DELETE_REPORT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
   }
   if (action.type === EDIT_REPORT_BEGIN) {
     return {
