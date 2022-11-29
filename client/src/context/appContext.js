@@ -35,9 +35,9 @@ import {
 import reducer from "./reducer";
 import axios from "axios";
 
-const token = localStorage.getItem("token");
-const user = localStorage.getItem("user");
-const userProgramType = localStorage.getItem("programType");
+// const token = localStorage.getItem("token");
+// const user = localStorage.getItem("user");
+// const userProgramType = localStorage.getItem("programType");
 
 const initialState = {
   isLoading: false,
@@ -46,12 +46,15 @@ const initialState = {
   alertType: "",
 
   // User related states
-  user: user ? JSON.parse(user) : null,
-  token: token,
-  userProgramType: userProgramType || "",
+  // user: user ? JSON.parse(user) : null,
+  // token: token,
+  user: null,
+  userProgramType: "",
+  // userProgramType: userProgramType || "",
 
   // Report edit related states
-  reportProgramType: userProgramType || "",
+  // reportProgramType: userProgramType || "",
+  reportProgramType: "",
   programTypeOptions: ["Art", "Nature", "Neighborhood", "Admin"],
   showSidebar: false,
   isEditing: false,
@@ -140,18 +143,18 @@ const AppProvider = ({ children }) => {
     baseURL: "api/v1",
   });
 
-  // AXIOS INTERCEPTORS - control error response, keep track error response
-  // and make decisions based on error response
-  // Add axios request interceptor - set up 1 logic for multiple error response
-  authFetch.interceptors.request.use(
-    (config) => {
-      config.headers["Authorization"] = `Bearer ${state.token}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  // // AXIOS INTERCEPTORS - control error response, keep track error response
+  // // and make decisions based on error response
+  // // Add axios request interceptor - set up 1 logic for multiple error response
+  // authFetch.interceptors.request.use(
+  //   (config) => {
+  //     config.headers["Authorization"] = `Bearer ${state.token}`;
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   // Add axios response interceptor
   authFetch.interceptors.response.use(
@@ -179,34 +182,34 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  // persist user in local storage
-  const addUserToLocalStorage = ({ user, token, programType }) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
-    localStorage.setItem("programType", programType);
-  };
+  // // persist user in local storage
+  // const addUserToLocalStorage = ({ user, token, programType }) => {
+  //   localStorage.setItem("user", JSON.stringify(user));
+  //   localStorage.setItem("token", token);
+  //   localStorage.setItem("programType", programType);
+  // };
 
-  const removeUserFromLocalStorage = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("programType");
-  };
+  // const removeUserFromLocalStorage = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("user");
+  //   localStorage.removeItem("programType");
+  // };
 
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
-    console.log(currentUser);
+    // console.log(currentUser);
     try {
       const response = await axios.post("/api/v1/auth/register", currentUser);
       // console.log(response);
-      const { user, token, programType } = response.data;
+      const { user, programType } = response.data;
 
       dispatch({
         type: REGISTER_USER_SUCCESS,
-        payload: { user, token, programType },
+        payload: { user, programType },
       });
 
       // persist user in local storage
-      addUserToLocalStorage({ user, token, programType });
+      // addUserToLocalStorage({ user, token, programType });
     } catch (error) {
       //  console.log(error.response);
       dispatch({
@@ -220,18 +223,18 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async (currentUser) => {
     dispatch({ type: LOGIN_USER_BEGIN });
-    console.log(currentUser);
+    // console.log(currentUser);
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
-      const { user, token, programType } = data;
+      const { user, programType } = data;
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { user, token, programType },
+        payload: { user, programType },
       });
 
-      // persist user in local storage
-      addUserToLocalStorage({ user, token, programType });
+      // // persist user in local storage
+      // addUserToLocalStorage({ user, programType });
     } catch (error) {
       dispatch({
         type: LOGIN_USER_ERROR,
@@ -248,7 +251,7 @@ const AppProvider = ({ children }) => {
 
   const logOutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
+    // removeUserFromLocalStorage();
   };
 
   const updateUser = async (currentUser) => {
@@ -256,14 +259,14 @@ const AppProvider = ({ children }) => {
 
     try {
       const { data } = await authFetch.patch("/auth/update", currentUser);
-      const { user, programType, token } = data;
+      const { user, programType } = data;
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { user, programType, token },
+        payload: { user, programType },
       });
 
-      addUserToLocalStorage({ user, programType, token });
+      // addUserToLocalStorage({ user, programType, token });
     } catch (error) {
       // console.log(error.response);
       if (error.response.status !== 401) {
