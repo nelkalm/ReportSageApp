@@ -36,8 +36,6 @@ const createReport = async (req, res) => {
     numBetterOff,
   } = req.body;
 
-  console.log(req.body);
-
   if (!reportProgramType || !programName || !programSubType) {
     throw new BadRequestError(
       "Please select the program type and add the program name"
@@ -70,7 +68,10 @@ const getAllReports = async (req, res) => {
 
   const queryObject = {
     createdBy: req.user.userId,
+    programType: req.user.programType,
   };
+
+  // console.log(queryObject);
 
   // add query conditional logic
   if (programSubType && programSubType !== "All") {

@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import attachCookies from "../utils/attachCookies.js";
 
 // Set up next() to pass error handling to the error-handler middleware
 const register = async (req, res) => {
@@ -24,6 +25,9 @@ const register = async (req, res) => {
   });
 
   const token = user.createJWT();
+
+  attachCookies({ res, token });
+
   res.status(StatusCodes.CREATED).json({
     user: {
       email: user.email,
@@ -31,7 +35,6 @@ const register = async (req, res) => {
       lastName: user.lastName,
       programType: user.programType,
     },
-    token,
     programType: user.programType,
   });
 };
@@ -56,9 +59,10 @@ const login = async (req, res) => {
   const token = user.createJWT();
   user.password = undefined;
 
-  res
-    .status(StatusCodes.OK)
-    .json({ user, token, programType: user.programType });
+  // Initiate cookie to store JWT token
+  attachCookies({ res, token });
+
+  res.status(StatusCodes.OK).json({ user, programType: user.programType });
 };
 
 const updateUser = async (req, res) => {
@@ -79,9 +83,9 @@ const updateUser = async (req, res) => {
 
   const token = user.createJWT();
 
-  res
-    .status(StatusCodes.OK)
-    .json({ user, token, programType: user.programType });
+  attachCookies({ res, token });
+
+  res.status(StatusCodes.OK).json({ user, programType: user.programType });
 };
 
 export { register, login, updateUser };
