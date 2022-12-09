@@ -3,12 +3,7 @@ const router = express.Router();
 
 import rateLimiter from "express-rate-limit";
 
-import {
-  register,
-  login,
-  updateUser,
-  getCurrentUser,
-} from "../controllers/authController.js";
+import { register, login, updateUser } from "../controllers/authController.js";
 
 import authenticateUser from "../middleware/auth.js";
 import testUser from "../middleware/testUser.js";
@@ -23,6 +18,5 @@ const apiLimiter = rateLimiter({
 router.route("/register").post(apiLimiter, register);
 router.route("/login").post(apiLimiter, login);
 router.route("/update").patch(authenticateUser, testUser, updateUser);
-router.route("/getCurrentUser").patch(authenticateUser, getCurrentUser);
 
 export default router;

@@ -57,6 +57,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      token: action.payload.token,
       user: action.payload.user,
       userProgramType: action.payload.programType,
       reportProgramType: action.payload.programType,
@@ -81,6 +82,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      token: action.payload.token,
       user: action.payload.user,
       userProgramType: action.payload.programType,
       reportProgramType: action.payload.programType,
@@ -108,6 +110,7 @@ const reducer = (state, action) => {
     return {
       ...initialState,
       user: null,
+      token: null,
       userProgramType: "",
       reportProgramType: "",
     };
@@ -119,6 +122,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      token: action.payload.token,
       user: action.payload.user,
       userProgramType: action.payload.programType,
       reportProgramType: action.payload.programType,

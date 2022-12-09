@@ -88,9 +88,4 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, programType: user.programType });
 };
 
-const getCurrentUser = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId });
-  res.status(StatusCodes.OK).json({ user, programType: user.programType });
-};
-
-export { register, login, updateUser, getCurrentUser };
+export { register, login, updateUser };
