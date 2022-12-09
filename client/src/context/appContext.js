@@ -354,7 +354,7 @@ const AppProvider = ({ children }) => {
 
   const getReports = async () => {
     // Fetch reports with search and sort criteria
-    const { search, searchProgramSubType, sort, page, userProgramType } = state;
+    const { search, searchProgramSubType, sort, page } = state;
 
     let url = `/reports?page=${page}&programSubType=${searchProgramSubType}&sort=${sort}`;
 
