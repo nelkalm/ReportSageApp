@@ -36,7 +36,7 @@ const createReport = async (req, res) => {
     numBetterOff,
   } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
 
   if (!reportProgramType || !programName || !programSubType) {
     throw new BadRequestError(

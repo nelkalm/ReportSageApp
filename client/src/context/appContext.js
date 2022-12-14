@@ -159,7 +159,7 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      console.log(error.response);
+      // console.log(error.response);
       // if bearer token is missing/expires (401) then log out user
       if (error.response.status === 401) {
         logOutUser();
@@ -194,7 +194,7 @@ const AppProvider = ({ children }) => {
 
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
-    console.log(currentUser);
+    // console.log(currentUser);
     try {
       const response = await axios.post("/api/v1/auth/register", currentUser);
       // console.log(response);
@@ -220,7 +220,7 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async (currentUser) => {
     dispatch({ type: LOGIN_USER_BEGIN });
-    console.log(currentUser);
+    // console.log(currentUser);
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
       const { user, token, programType } = data;
